@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Package delivery form</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
+    </script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.5.1/dist/esri-leaflet.js" integrity="sha512-q7X96AASUF0hol5Ih7AeZpRF6smJS55lcvy+GLWzJfZN+31/BQ8cgNx2FGF+IQSA4z2jHwB20vml+drmooqzzQ==" crossorigin="">
+    </script>
+
+    <!-- Load Esri Leaflet Geocoder from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css" integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g==" crossorigin="">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js" integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA==" crossorigin="">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <img src="cargo-truck.png" alt="Logo" />
+        <h2>Fast Delivery Form</h2>
+    </div>
+    <div id="overlay1">
+        <div class="row">
+            <button onclick="off1()" type="button" class="close"></button>
+
+        </div>
+        <div class="row">
+            <div id="map" style="
+          width:600px;height: 600px;
+         margin: 50px 25% 50px 25%;"></div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <form id="form1">
+            <div class="break"></div>
+            <div class="row">
+                <div class="col1">
+                    <div class="package-size-label">
+                        <h3>Package size</h3>
+                    </div>
+                </div>
+                <div class="col-parcels">
+
+                    <div class="box">
+                        <label class="parcel-box">
+                <input class="parcel-radio" type="radio" name="radio" checked/>
+                <img src="small.png" alt="Small box"/>
+                <span>Small</span>
+                <span>Up to 5kg</span>
+                
+              </label>
+                    </div>
+
+                    <div class="box">
+                        <label class="parcel-box">
+                <input class="parcel-radio" type="radio" name="radio" />
+                <img src="medium.png" alt="Medium box">
+                <span>Medium</span>
+                <span>Up to 15kg</span>
+              </label>
+                    </div>
+
+                    <div class="box">
+                        <label class="parcel-box">
+                <input class="parcel-radio" type="radio" name="radio"/>
+                <img src="large.png" alt="Large box">
+                <span>Big</span>
+                <span>Up to 25kg</span>
+              </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="column50">
+                    <section class="sender-body">
+                        <div class="big-label">
+                            <h3>Sender</h3>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">First name<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="sfname" type="text" pattern="[A-Za-z]{?20}" required name="sfirstname" placeholder="Your first name...">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">Last Name<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="slname" type="text" pattern="[A-Za-z]{?20}" required name="slastname" placeholder="Your last name...">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">Email address<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="semail" type="email" required id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="semailaddress" placeholder="example@domain.com">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">Phone number<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="sphone" type="tel" pattern="[+]{1}[0-9]{11,14}" id="sphone" name="phonenumber" placeholder="eg. +48 504 192 138">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="column50">
+                    <section class="recipient-body">
+                        <div class="big-label">
+                            <h3>Recipient</h3>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">First name<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="rfname" type="text" pattern="[A-Za-z]{?20}" required name="firstname" placeholder="Recipient's name..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">Last Name<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="rlname" type="text" pattern="[A-Za-z]{?20}" required name="rlastname" placeholder="Your name..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="remail">Email address</label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="remail" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required name="remailaddress" placeholder="example@domain.com">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="fname">Phone number<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="rphone" type="tel" id="rphone" pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column50">
+                    <section class="pickup-address-body">
+                        <div class="big-label">
+                            <h3>Pickup Address</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col1">
+                                <label class="form-label" for="country">Country<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <select class="user-input" id="country" name="country">
+                    <option value="Poland">Poland</option>
+                    <option value="European Union">European Union</option>
+                    <option value="Outside European Union">Outside European Union</option>
+                  </select>
+                                <button id="pickupbtn" type="button" style="
+                  width: 60px;
+                  height: 50px;
+                  background-image: url('location.png');
+                  background-size: contain;
+                  background-repeat: no-repeat;" onclick="on1()"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col1">
+                                <label class="form-label" for="street">City<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="pcity" type="text" id="city" name="city" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col1">
+                                <label class="form-label" for="code">Street Adress<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="pstreet" type="text" required name="streetname" placeholder="eg. Wałowa 8/3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col1">
+                                <label class="form-label">Postcode<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" type="text" id="ppostcode" name="d-postcode" placeholder="Enter full post code">
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="column50">
+                    <section class="delivery-address-body">
+                        <div class="big-label">
+                            <h3>Delivery Address</h3>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="country">Country<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <select class="user-input" id="country" name="country">
+                    <option value="Poland">Poland</option>
+                    <option value="European Union">European Union</option>
+                    <option value="Outside European Union">Outside European Union</option>
+                  </select>
+                                <button id="deliverybtn" type="button" style="
+                  width: 60px;
+                  height: 50px;
+                  background-image: url('location.png');
+                  background-size: contain;
+                  background-repeat: no-repeat;" onclick="on2()"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label" for="street">City<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" type="text" id="dcity" name="city" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col1">
+                                <label class="form-label" for="code">Street Adress<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" id="dstreet" type="text" required name="streetname" placeholder="eg. Wałowa 8/3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=col1>
+                                <label class="form-label">Postcode<span>*</span></label>
+                            </div>
+                            <div class="col2">
+                                <input class="user-input" type="text" id="dpostcode" name="d-postcode" placeholder="Enter full post code">
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row map-comment-row">
+
+                <div class="column50 comments-area">
+                    <div class="big-label">
+                        <h2 class="comment-label">Comments</h2>
+                    </div>
+                    <div class="col2">
+                        <textarea id="comments" name="comments" placeholder="Additional comments about the delivery method" style="height:250px; width: 100%;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 30px;"></div>
+            <div id="submit-body">
+                <input type="button" id="submit-button" value="Submit"/>
+                <input type="button" id="obtain-button" value="obtain" />
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>Michał Lemiec<br> Karol Malinowski<br>
+    </footer>
+<script src="script.js"></script>
+</body>
+
+</html>

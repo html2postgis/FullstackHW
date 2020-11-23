@@ -26,7 +26,7 @@
 
 <body>
     <div class="header">
-        <img src="cargo-truck.png" alt="Logo" />
+        <img src="Graphics/cargo-truck.png" alt="Logo" />
         <h2>Fast Delivery Form</h2>
     </div>
     <div id="overlay1">
@@ -56,7 +56,7 @@
                     <div class="box">
                         <label class="parcel-box">
                 <input class="parcel-radio" type="radio" name="radio" checked/>
-                <img src="small.png" alt="Small box"/>
+                <img src="PackageSizes/small.png" alt="Small box"/>
                 <span>Small</span>
                 <span>Up to 5kg</span>
                 
@@ -66,7 +66,7 @@
                     <div class="box">
                         <label class="parcel-box">
                 <input class="parcel-radio" type="radio" name="radio" />
-                <img src="medium.png" alt="Medium box">
+                <img src="PackageSizes/medium.png" alt="Medium box">
                 <span>Medium</span>
                 <span>Up to 15kg</span>
               </label>
@@ -75,7 +75,7 @@
                     <div class="box">
                         <label class="parcel-box">
                 <input class="parcel-radio" type="radio" name="radio"/>
-                <img src="large.png" alt="Large box">
+                <img src="PackageSizes/large.png" alt="Large box">
                 <span>Big</span>
                 <span>Up to 25kg</span>
               </label>
@@ -110,7 +110,7 @@
                                 <label class="form-label" for="fname">Email address<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="semail" type="email" required id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="semailaddress" placeholder="example@domain.com">
+                                <input class="user-input" id="semail" type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="semailaddress" placeholder="example@domain.com">
                             </div>
                         </div>
                         <div class="row">
@@ -118,7 +118,7 @@
                                 <label class="form-label" for="fname">Phone number<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="sphone" type="tel" pattern="[+]{1}[0-9]{11,14}" id="sphone" name="phonenumber" placeholder="eg. +48 504 192 138">
+                                <input class="user-input" id="sphone" type="tel" pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
                             </div>
                         </div>
                     </section>
@@ -157,7 +157,7 @@
                                 <label class="form-label" for="fname">Phone number<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="rphone" type="tel" id="rphone" pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
+                                <input class="user-input" id="rphone" type="tel"  pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
                             </div>
                         </div>
                     </section>
@@ -171,10 +171,10 @@
                         </div>
                         <div class="row">
                             <div class="col1">
-                                <label class="form-label" for="country">Country<span>*</span></label>
+                                <label class="form-label" for="pickupcountry">Country<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <select class="user-input" id="country" name="country">
+                                <select class="user-input" id="pickupcountry" name="pickupcountry">
                     <option value="Poland">Poland</option>
                     <option value="European Union">European Union</option>
                     <option value="Outside European Union">Outside European Union</option>
@@ -182,7 +182,7 @@
                                 <button id="pickupbtn" type="button" style="
                   width: 60px;
                   height: 50px;
-                  background-image: url('location.png');
+                  background-image: url('Graphics/location.png');
                   background-size: contain;
                   background-repeat: no-repeat;" onclick="on1()"></button>
                             </div>
@@ -192,7 +192,7 @@
                                 <label class="form-label" for="street">City<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="pcity" type="text" id="city" name="city" placeholder="City">
+                                <input class="user-input" id="pcity" type="text"  name="city" placeholder="City">
                             </div>
                         </div>
                         <div class="row">
@@ -221,10 +221,10 @@
                         </div>
                         <div class="row">
                             <div class=col1>
-                                <label class="form-label" for="country">Country<span>*</span></label>
+                                <label class="form-label" for="deliverycountry">Country<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <select class="user-input" id="country" name="country">
+                                <select class="user-input" id="deliverycountry" name="deliverycountry">
                     <option value="Poland">Poland</option>
                     <option value="European Union">European Union</option>
                     <option value="Outside European Union">Outside European Union</option>
@@ -232,7 +232,7 @@
                                 <button id="deliverybtn" type="button" style="
                   width: 60px;
                   height: 50px;
-                  background-image: url('location.png');
+                  background-image: url('Graphics/location.png');
                   background-size: contain;
                   background-repeat: no-repeat;" onclick="on2()"></button>
                             </div>
@@ -262,6 +262,7 @@
 
                             </div>
                         </div>
+                        </section>
                 </div>
             </div>
             <div class="row map-comment-row">

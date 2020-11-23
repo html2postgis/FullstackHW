@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\bckgrnd.jpg" />
-    <None Include="wwwroot\cargo-truck.png" />
+    <None Include="wwwroot\Graphics\bckgrnd.jpg" />
+    <None Include="wwwroot\Graphics\cargo-truck.png" />
     <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\large.png" />
-    <None Include="wwwroot\location.png" />
-    <None Include="wwwroot\medium.png" />
+    <None Include="wwwroot\PackageSizes\large.png" />
+    <None Include="wwwroot\Graphics\location.png" />
+    <None Include="wwwroot\PackageSizes\medium.png" />
     <None Include="wwwroot\script.js" />
     <None Include="wwwroot\script2.js" />
-    <None Include="wwwroot\small.png" />
+    <None Include="wwwroot\PackageSizes\small.png" />
     <None Include="wwwroot\style.css" />
     <None Include="wwwroot\style1.css" />
     <None Include="wwwroot\submit.html" />

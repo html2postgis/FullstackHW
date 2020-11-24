@@ -1,0 +1,31 @@
+1. Add map at the bottom of our page;
+  *good CSS and HTML code with appropiate names
+  
+2. Consult the best geoapi that will fullfil 4 key problems:
+-A: Free; it has to be free,
+-B: Documentation; good documentation with plenty examples,
+-C: Easy to implement; it should take much time to switch to new solution
+-D: Verbose customization; plenty of map tiles,
+
+Proposition 1:
+-HERE Developer
+  *general descrpition: 
+    https://developer.here.com/develop/javascript-api
+  *finding the nearest marker:
+    https://developer.here.com/documentation/examples/maps-js/markers/finding-the-nearest-marker
+    
+
+Proposition 2:
+-Plunker???
+  *general descrpition: 
+    link is the same as for solution. This solution is overdone(it shows nearest points with lines).
+    But maybe we can take some code from it.
+  *finding the nearest marker:
+    https://bl.ocks.org/rgdonohue/0598de175f591803fa97d65d8330f40d
+ 
+ 
+ #1 REMINDER:
+  We already used one library/plugin/appi??? that uses gecoding(https://esri.github.io/esri-leaflet/examples/reverse-geocoding.html),
+  maybe some propositions(generally proposition number 1) would not need this solution.
+  
+  

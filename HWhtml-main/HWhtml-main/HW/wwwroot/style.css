@@ -311,6 +311,21 @@ footer p {
     }
 }
 
+#special-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mapid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 500px;
+    margin: 100px;
+}
+
 @media screen and (max-width: 1150px) {
     .map-comment-row {
         flex-direction: column;

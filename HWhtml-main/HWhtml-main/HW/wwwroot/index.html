@@ -21,7 +21,7 @@
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js" integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA==" crossorigin="">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    
 </head>
 
 <body>
@@ -55,30 +55,30 @@
 
                     <div class="box">
                         <label class="parcel-box">
-                <input class="parcel-radio" type="radio" name="radio" checked/>
-                <img src="PackageSizes/small.png" alt="Small box"/>
-                <span>Small</span>
-                <span>Up to 5kg</span>
-                
-              </label>
+                            <input class="parcel-radio" type="radio" name="radio" checked />
+                            <img src="PackageSizes/small.png" alt="Small box" />
+                            <span>Small</span>
+                            <span>Up to 5kg</span>
+
+                        </label>
                     </div>
 
                     <div class="box">
                         <label class="parcel-box">
-                <input class="parcel-radio" type="radio" name="radio" />
-                <img src="PackageSizes/medium.png" alt="Medium box">
-                <span>Medium</span>
-                <span>Up to 15kg</span>
-              </label>
+                            <input class="parcel-radio" type="radio" name="radio" />
+                            <img src="PackageSizes/medium.png" alt="Medium box">
+                            <span>Medium</span>
+                            <span>Up to 15kg</span>
+                        </label>
                     </div>
 
                     <div class="box">
                         <label class="parcel-box">
-                <input class="parcel-radio" type="radio" name="radio"/>
-                <img src="PackageSizes/large.png" alt="Large box">
-                <span>Big</span>
-                <span>Up to 25kg</span>
-              </label>
+                            <input class="parcel-radio" type="radio" name="radio" />
+                            <img src="PackageSizes/large.png" alt="Large box">
+                            <span>Big</span>
+                            <span>Up to 25kg</span>
+                        </label>
                     </div>
 
                 </div>
@@ -157,7 +157,7 @@
                                 <label class="form-label" for="fname">Phone number<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="rphone" type="tel"  pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
+                                <input class="user-input" id="rphone" type="tel" pattern="[+]{1}[0-9]{11,14}" name="phonenumber" placeholder="eg. +48 504 192 138">
                             </div>
                         </div>
                     </section>
@@ -175,10 +175,10 @@
                             </div>
                             <div class="col2">
                                 <select class="user-input" id="pickupcountry" name="pickupcountry">
-                    <option value="Poland">Poland</option>
-                    <option value="European Union">European Union</option>
-                    <option value="Outside European Union">Outside European Union</option>
-                  </select>
+                                    <option value="Poland">Poland</option>
+                                    <option value="European Union">European Union</option>
+                                    <option value="Outside European Union">Outside European Union</option>
+                                </select>
                                 <button id="pickupbtn" type="button" style="
                   width: 60px;
                   height: 50px;
@@ -192,7 +192,7 @@
                                 <label class="form-label" for="street">City<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="pcity" type="text"  name="city" placeholder="City">
+                                <input class="user-input" id="pcity" type="text" name="city" placeholder="City">
                             </div>
                         </div>
                         <div class="row">
@@ -225,10 +225,10 @@
                             </div>
                             <div class="col2">
                                 <select class="user-input" id="deliverycountry" name="deliverycountry">
-                    <option value="Poland">Poland</option>
-                    <option value="European Union">European Union</option>
-                    <option value="Outside European Union">Outside European Union</option>
-                  </select>
+                                    <option value="Poland">Poland</option>
+                                    <option value="European Union">European Union</option>
+                                    <option value="Outside European Union">Outside European Union</option>
+                                </select>
                                 <button id="deliverybtn" type="button" style="
                   width: 60px;
                   height: 50px;
@@ -262,7 +262,7 @@
 
                             </div>
                         </div>
-                        </section>
+                    </section>
                 </div>
             </div>
             <div class="row map-comment-row">
@@ -273,21 +273,37 @@
                     </div>
                     <div class="col2">
                         <textarea id="comments" name="comments" placeholder="Additional comments about the delivery method" style="height:250px; width: 100%;"></textarea>
+
                     </div>
                 </div>
+                <div class="column50">
+                    <div id="mapid">
+
+                    </div>
+                </div>
+                
             </div>
             <div style="height: 30px;"></div>
             <div id="submit-body">
-                <input type="button" id="submit-button" value="Submit"/>
+                <input type="button" id="submit-button" value="Submit" />
                 <input type="button" id="obtain-button" value="obtain" />
+
+            </div>
+            <div id="special-class">
+                <div class="column50 comments-area">
+                    <div style="height: 30px;"></div>
+                    
+                </div>
+              
             </div>
         </form>
-    </div>
 
+    </div>
+    
     <footer>
         <p>Michał Lemiec<br> Karol Malinowski<br>
     </footer>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

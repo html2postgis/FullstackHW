@@ -1,27 +1,63 @@
-﻿var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+﻿// some variables and constants
+var uri = 'api/address';
+let PICKUP = 0;
+let DELIVERY = 1;
+
+// map attribute
+var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
     '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
+// popup map layers
 var grayscale1 = L.tileLayer(mbUrl, { id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr }),
     streets1 = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+// submit map layers
+var grayscale2 = L.tileLayer(mbUrl, { id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr }),
+    streets2 = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
 
+// pickUp marker from form 
 var leftMarker = [];
+// delivery marker from form
 var rightMarker = [];
+// data for all pickups
+var pickUpsData = [];
+// data for all pickups
+var deliveriesData = [];
 
-var markers1 = L.layerGroup()
+// markers for popup map(could be deleted cause we use one on a time)
+var markers1 = L.layerGroup();
+// displaying pickup roads(idk if this gonna work)
+var pickUpRoads = L.layerGroup();
+// displaying delivery roads(idk if this gonna work)
+var deliveryRoads = L.layerGroup();
+// markers for all pickups
+var pickUpmarkers = L.layerGroup();
+// markers for all deliveries 
+var deliverymarkers = L.layerGroup();
+
+
+// tmp marker used for onclick event
 var marker = null;
-
+// flags for chosing if we should gecode/revergeocode data for pickup or delivery
 var pickupbtnClicked = false;
 var deliverybtnClicked = false;
 
+// popup map
 var map = L.map('map', {
     center: [52.237049, 21.017532],
     zoom: 13,
     layers: [grayscale1, markers1]
 });
 
+// map for displaying data
+var mapSubmit = L.map('mapid', {
+    center: [52.237049, 21.017532],
+    zoom: 13,
+    layers: grayscale2
+});
 
+// function on clicking left "red marker" button
 function on1() {
     pickupbtnClicked = true;
     deliverybtnClicked = false;
@@ -30,15 +66,10 @@ function on1() {
     }
     document.getElementById("overlay1").style.display = "flex";
     map.invalidateSize();
-    hejka();
+    geocodingAddressFiller();
 
 }
-
-function off1() {
-    document.getElementById("overlay1").style.display = "none";
-
-}
-
+// function on clicking right "red marker" button
 function on2() {
 
     pickupbtnClicked = false;
@@ -48,35 +79,55 @@ function on2() {
     }
     document.getElementById("overlay1").style.display = "flex";
     map.invalidateSize();
-    hejka();
+    geocodingAddressFiller();
+
+}
+// function on closing popup map
+function off1() {
+    document.getElementById("overlay1").style.display = "none";
 
 }
 
-
-
+// layers for popup map
 var baseLayers1 = {
     "Grayscale": grayscale1,
     "Streets": streets1
 };
-
-
 var overlays1 = {
     "Markers": markers1
 };
 
+// layers for submit map
+var baseLayers2 = {
+    "Grayscale": grayscale2,
+    "Streets": streets2
+};
+var overlays2 = {
+    "<span style='color: green'>Pickup<br />&emsp; roads</span>": pickUpRoads,
+    "<span style='color: lightgreen'>Pickups</span>": pickUpmarkers,
+    "<span style='color: red'>Delivery<br />&emsp; roads</span>": deliveryRoads,
+    "<span style='color: pink'>Deliveries</span>": deliverymarkers
+};
 
 
+
+// reverse geocoding service
 var geocodeService1 = L.esri.Geocoding.geocodeService();
+// geocoding service
 var geocodeService2 = L.esri.Geocoding.geocodeService();
 
+// map submit display
+mapSubmit.invalidateSize();
+L.control.layers(baseLayers2, overlays2).addTo(mapSubmit);
+mapSubmit.invalidateSize();
 
-// MaP1
+// popup map display
 L.control.layers(baseLayers1, overlays1).addTo(map);
+//map on click handle
 map.on('click', onMapClick1);
 
-
-//geocoding 
-function hejka() {
+// geocoding and address filling 
+function geocodingAddressFiller() {
     if (pickupbtnClicked == true) {
         if ($('#pstreet').val() && $('#ppostcode').val() && $('#pcity').val()) {
             geocodeService2.geocode().address($('#pstreet').val()).city($('#pcity').val()).postal($('#ppostcode').val()).run(function (err, results, response) {
@@ -190,13 +241,7 @@ function hejka() {
 
     }
 }
-
-
-
-
-
-
-
+// reverse geocoding and address filling
 function onMapClick1(e) {
 
     {
@@ -300,36 +345,8 @@ function onMapClick1(e) {
 
 
 }
-var uri = 'api/address';
-const PICKUP = 0;
-const DELIVERY = 1;
-$(document).ready(function () {
-    // Send an AJAX request
-    //$.getJSON(uri)
-    //    .done(function (data) {
-    //        // On success, 'data' contains a list of addresses.
-    //        if (data == null) return;
-    //        $('#dcity').val(data[PICKUP].City);
-    //        //$('#pstreet').val(data[PICKUP].StreetAddress);
-    //        //$('#ppostcode').val(data[PICKUP].Postcode);
-    //        //$('#sfname').val(data[PICKUP].person.f_name);
-    //        //$('#slname').val(data[PICKUP].person.l_name);
-    //        //$('#semail').val(data[PICKUP].person.email);
-    //        //$('#sphone').val(data[PICKUP].person.phone);
 
-    //        //$('#dcity').val(data[DELIVERY].City);
-    //        //$('#dstreet').val(data[DELIVERY].StreetAddress);
-    //        //$('#dpostcode').val(data[DELIVERY].Postcode);
-    //        //$('#rfname').val(data[DELIVERY].person.f_name);
-    //        //$('#rlname').val(data[DELIVERY].person.l_name);
-    //        //$('#remail').val(data[DELIVERY].person.email);
-    //        //$('#rphone').val(data[DELIVERY].person.phone);
-    //        //$.each(data, function (key, item) {
-    //        //    console.log(item);
-    //        //});
-    //    });
-});
-
+// button handlers
 $("#submit-button").click(function () {
     var person = { f_name: "Karol", l_name: "Malinowski", email: "karol.mal@gmail.com", phone: "+48608192913" };
     var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Person: person };
@@ -388,7 +405,32 @@ $("#obtain-button").click(function () {
 
 
 
+//$(document).ready(function () {
+//    // Send an AJAX request
+//    //$.getJSON(uri)
+//    //    .done(function (data) {
+//    //        // On success, 'data' contains a list of addresses.
+//    //        if (data == null) return;
+//    //        $('#dcity').val(data[PICKUP].City);
+//    //        //$('#pstreet').val(data[PICKUP].StreetAddress);
+//    //        //$('#ppostcode').val(data[PICKUP].Postcode);
+//    //        //$('#sfname').val(data[PICKUP].person.f_name);
+//    //        //$('#slname').val(data[PICKUP].person.l_name);
+//    //        //$('#semail').val(data[PICKUP].person.email);
+//    //        //$('#sphone').val(data[PICKUP].person.phone);
 
+//    //        //$('#dcity').val(data[DELIVERY].City);
+//    //        //$('#dstreet').val(data[DELIVERY].StreetAddress);
+//    //        //$('#dpostcode').val(data[DELIVERY].Postcode);
+//    //        //$('#rfname').val(data[DELIVERY].person.f_name);
+//    //        //$('#rlname').val(data[DELIVERY].person.l_name);
+//    //        //$('#remail').val(data[DELIVERY].person.email);
+//    //        //$('#rphone').val(data[DELIVERY].person.phone);
+//    //        //$.each(data, function (key, item) {
+//    //        //    console.log(item);
+//    //        //});
+//    //    });
+//});
 //function formatItem(item) {
 //    return item.Name + ': $' + item.Price;
 //}

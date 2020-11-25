@@ -65,6 +65,7 @@ function on1() {
         markers1.removeLayer(marker);
     }
     document.getElementById("overlay1").style.display = "flex";
+    document.getElementById("mapid").style.zIndex = 1;
     map.invalidateSize();
     geocodingAddressFiller();
 
@@ -85,6 +86,7 @@ function on2() {
 // function on closing popup map
 function off1() {
     document.getElementById("overlay1").style.display = "none";
+    document.getElementById("mapid").style.zIndex = 2;
 
 }
 
@@ -104,8 +106,8 @@ var baseLayers2 = {
 };
 var overlays2 = {
     "<span style='color: green'>Pickup<br />&emsp; roads</span>": pickUpRoads,
-    "<span style='color: lightgreen'>Pickups</span>": pickUpmarkers,
     "<span style='color: red'>Delivery<br />&emsp; roads</span>": deliveryRoads,
+    "<span style='color: lightgreen'>Pickups</span>": pickUpmarkers,
     "<span style='color: pink'>Deliveries</span>": deliverymarkers
 };
 
@@ -120,6 +122,18 @@ var geocodeService2 = L.esri.Geocoding.geocodeService();
 mapSubmit.invalidateSize();
 L.control.layers(baseLayers2, overlays2).addTo(mapSubmit);
 mapSubmit.invalidateSize();
+
+// create custom icon
+var depotIcon = L.icon({
+    iconUrl: 'Graphics/depot.png',
+    iconSize: [50, 50], // size of the icon
+});
+
+// create marker object, pass custom icon as option, add to map         
+var depotMarker = L.marker([52.232015398127395, 21.006037913359265], { icon: depotIcon }).addTo(mapSubmit).bindPopup("Depot");
+
+
+
 
 // popup map display
 L.control.layers(baseLayers1, overlays1).addTo(map);
@@ -380,6 +394,29 @@ $("#obtain-button").click(function () {
             $('#dcity').val(response.city);
             $('#dstreet').val(response.streetAddress);
             $('#dpostcode').val(response.postcode);
+
+            var geocoding = L.esri.Geocoding.geocodeService();
+            geocoding.geocode().address(response.streetAddress).city(response.city).postal(response.postcode).run(function (err, results, response) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                //leftMarker = [];
+                //leftMarker.push(results.results[0].latlng);
+                //leftMarker.push($('#pstreet').val());
+                //leftMarker.push($('#ppostcode').val());
+                //leftMarker.push($('#pcity').val());
+                //console.log(leftMarker);
+                //if (marker !== null) {
+                //    markers1.removeLayer(marker);
+                //}
+
+                console.log(results.results[0]);
+                marker = L.marker(results.results[0].latlng,).addTo(pickUpmarkers).bindPopup(results.results[0]).openPopup();
+                
+                
+            });
+
             //$('#sfname').val(response.person.f_name);
             //$('#slname').val(response.person.l_name);
             //$('#semail').val(response.person.email);

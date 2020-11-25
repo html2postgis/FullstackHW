@@ -28,7 +28,8 @@ namespace HW
         {
             services.AddControllers();
             //this will initialize IGradesList arguments as GradeList object (which will be a singleton)
-            services.AddSingleton<IAddressList, AddressList>();
+            services.AddSingleton<IOrderList,OrderList>();
+            services.AddSingleton<IVehicleRepository, VehicleList>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,24 +13,32 @@ namespace HW.Controllers
     [Route("[controller]")]
     public class FormSubmitController : ControllerBase
     {
-        private readonly IAddressList _addressList;
+        public IOrderList _orderList;
         // GET: api/<FormSubmitController>
-        public FormSubmitController(IAddressList addressList)
+        public FormSubmitController(IOrderList orderList)
         {
-            _addressList = addressList;
+            _orderList = orderList;
         }
         [HttpPost("{action}")]
-        public IActionResult AddAddress([FromBody]Address value)
+        public IActionResult Action1([FromBody] Order value)
         {
-            _addressList.AddAddress(value);
-            return Created("",value);
+            _orderList.AddOrder(value);
+            Console.WriteLine("Action1");
+            return Created("", value);
+        }
+        [HttpPost("{action}")]
+        public IActionResult Action2([FromBody] Order value)
+        {
+            Console.WriteLine("Action2");
+            _orderList.AddOrder(value);
+            return Created("", value);
         }
 
         // GET api/<FormSubmitController>/5
         [HttpGet("{action}")]
-        public Address GetAddress()
+        public List<Order> GetAddress()
         {
-            return _addressList.GetAddress();
+            return _orderList.GetOrders();
         }
 
     }

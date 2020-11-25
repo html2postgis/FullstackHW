@@ -1,4 +1,22 @@
-﻿// some variables and constants
+﻿// vehicles
+//$.ajax({
+//    method: "POST",
+//    url: "/Action1",
+//    data: JSON.stringify(order),
+//    contentType: "application/json",
+//    dataType: "json",
+//    success: function (response) {
+//        console.log('Action1 - success', response);
+//    },
+//    error: function (response) {
+//        console.warn('Send - error', response);
+//    }
+//});
+
+
+
+
+// some variables and constants
 var uri = 'api/address';
 let PICKUP = 0;
 let DELIVERY = 1;
@@ -360,24 +378,66 @@ function onMapClick1(e) {
 
 }
 
-// button handlers
 $("#submit-button").click(function () {
-    var person = { f_name: "Karol", l_name: "Malinowski", email: "karol.mal@gmail.com", phone: "+48608192913" };
-    var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Person: person };
+    var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val() };
+    var address2 = { City: "HelloCity", StreetAddress: "Helloaddress", Postcode: "hfoslkfds", Lat: 52.0, Lng:52.0};
+    var order = { PickupAddress: address, DeliveryAddress: address2 };
     $.ajax({
         method: "POST",
-        url: "FormSubmit/AddAddress",
-        data: JSON.stringify(address),
+        url: "FormSubmit/Action1",
+        data: JSON.stringify(order),
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-            console.log('Send - success', response);
+            console.log('Action1 - success', response);
         },
         error: function (response) {
             console.warn('Send - error', response);
         }
     });
+    //$.ajax({
+    //    url: "FormSubmit/Action2",
+    //    type: "POST",
+    //    contentType: "application/json; charset=utf-8",
+    //    data: JSON.stringify(order),
+    //    dataType: "json",
+    //    success: function (response) {
+    //        console.log('Action2 - success', response);
+    //        //if (response == null) {
+    //        //    console.log("Response is null");
+    //        //    return;
+    //        //}
+    //        //$('#dcity').val(response.city);
+    //        //$('#dstreet').val(response.streetAddress);
+    //        //$('#dpostcode').val(response.postcode);
+    //        //$('#sfname').val(response.person.f_name);
+    //        //$('#slname').val(response.person.l_name);
+    //        //$('#semail').val(response.person.email);
+    //        //$('#sphone').val(response.person.phone);
+    //    },
+    //    error: function (response) {
+    //        console.warn('GetAddress - error', response);
+    //    }
+    //});
 });
+// button handlers
+//$("#submit-button").click(function () {
+//    var person = { f_name: "Karol", l_name: "Malinowski", email: "karol.mal@gmail.com", phone: "+48608192913" };
+//    var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Person: person };
+//    $.ajax({
+//        method: "POST",
+//        url: "FormSubmit/AddAddress",
+//        data: JSON.stringify(address),
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (response) {
+//            console.log('Send - success', response);
+//        },
+//        error: function (response) {
+//            console.warn('Send - error', response);
+//        }
+//    });
+//});
 $("#obtain-button").click(function () {
 
     $.ajax({

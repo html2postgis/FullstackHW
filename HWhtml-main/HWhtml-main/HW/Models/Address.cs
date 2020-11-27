@@ -13,8 +13,6 @@ namespace HW.Models
             City = "";
             StreetAddress = "";
             Postcode = "";
-            Lng = 0;
-            Lat = 0;
             person = null;
         }
         

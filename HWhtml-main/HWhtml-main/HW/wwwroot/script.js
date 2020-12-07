@@ -17,7 +17,10 @@ var redIcon = new L.Icon({
 });
 
 
-
+// some variables and constants
+var uri = 'api/address';
+let PICKUP = 0;
+let DELIVERY = 1;
 
 // map attribute
 var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -184,18 +187,18 @@ function getPickUpPoints(callback) {
                 return;
             }
 
-            
+
             getDeliveryPoints(function (arrayOfPoints) {
-                
+
                 arrayOfPoints.push(arrayOfPoints[0]);
                 arrayOfPoints.push(arrayOfPoints[1]);
                 arrayOfPoints.push(results.results[0].latlng.lat);
                 arrayOfPoints.push((results.results[0].latlng.lng));
                 callback(arrayOfPoints);
             });
-            
+
         });
-       
+
     }
 }
 function getDeliveryPoints(callback) {
@@ -214,7 +217,7 @@ function getDeliveryPoints(callback) {
         });
 
     }
-  
+
 }
 // geocoding and address filling 
 function geocodingAddressFiller() {
@@ -336,104 +339,104 @@ function geocodingAddressFiller() {
 // reverse geocoding and address filling
 function onMapClick1(e) {
 
-    
-        geocodeService1.reverse().latlng(e.latlng).run(function (error, result) {
-            if (error) {
-                return;
-            }
-            var streetname = result.address.Address;
-            if (streetname == "") {
 
-            } else {
+    geocodeService1.reverse().latlng(e.latlng).run(function (error, result) {
+        if (error) {
+            return;
+        }
+        var streetname = result.address.Address;
+        if (streetname == "") {
 
-                console.log(result.address);
-                if (pickupbtnClicked == true) {
-                    leftMarker = [];
-                    leftMarker.push(result.latlng);
-                    leftMarker.push(result.address.Address);
-                    leftMarker.push(result.address.Postal);
-                    leftMarker.push(result.address.City);
-                    console.log(leftMarker);
-                    if (marker !== null) {
-                        markers1.removeLayer(marker);
-                    }
-                    marker = L.marker(leftMarker[0], { draggable: 'true' }).addTo(markers1).bindPopup(leftMarker[1]).openPopup().update();
-                    document.getElementById('pstreet').value = leftMarker[1];
-                    document.getElementById('ppostcode').value = leftMarker[2];
-                    document.getElementById('pcity').value = leftMarker[3];
-                } else if (deliverybtnClicked == true) {
-                    rightMarker = [];
-                    rightMarker.push(result.latlng);
-                    rightMarker.push(result.address.Address);
-                    rightMarker.push(result.address.Postal);
-                    rightMarker.push(result.address.City);
-                    console.log(rightMarker);
-                    if (marker !== null) {
-                        markers1.removeLayer(marker);
-                    }
-                    marker = L.marker(result.latlng, { draggable: 'true' }).addTo(markers1).bindPopup(result.address.Address).openPopup().update();
-                    document.getElementById('dstreet').value = result.address.Address;
-                    document.getElementById('dpostcode').value = result.address.Postal;
-                    document.getElementById('dcity').value = result.address.City;
+        } else {
+
+            console.log(result.address);
+            if (pickupbtnClicked == true) {
+                leftMarker = [];
+                leftMarker.push(result.latlng);
+                leftMarker.push(result.address.Address);
+                leftMarker.push(result.address.Postal);
+                leftMarker.push(result.address.City);
+                console.log(leftMarker);
+                if (marker !== null) {
+                    markers1.removeLayer(marker);
                 }
-                marker.on('contextmenu', function (e) {
-                    var mypopup = this.getPopup();
-                    if (mypopup.isOpen) {
-                        map.removeLayer(this);
-                        markers1.removeLayer(this);
-                        if (pickupbtnClicked == true) {
-                            leftMarker = [];
-                            $('#pstreet').val('');
-                            $('#pcity').val('');
-                            $('#ppostcode').val('');
+                marker = L.marker(leftMarker[0], { draggable: 'true' }).addTo(markers1).bindPopup(leftMarker[1]).openPopup().update();
+                document.getElementById('pstreet').value = leftMarker[1];
+                document.getElementById('ppostcode').value = leftMarker[2];
+                document.getElementById('pcity').value = leftMarker[3];
+            } else if (deliverybtnClicked == true) {
+                rightMarker = [];
+                rightMarker.push(result.latlng);
+                rightMarker.push(result.address.Address);
+                rightMarker.push(result.address.Postal);
+                rightMarker.push(result.address.City);
+                console.log(rightMarker);
+                if (marker !== null) {
+                    markers1.removeLayer(marker);
+                }
+                marker = L.marker(result.latlng, { draggable: 'true' }).addTo(markers1).bindPopup(result.address.Address).openPopup().update();
+                document.getElementById('dstreet').value = result.address.Address;
+                document.getElementById('dpostcode').value = result.address.Postal;
+                document.getElementById('dcity').value = result.address.City;
+            }
+            marker.on('contextmenu', function (e) {
+                var mypopup = this.getPopup();
+                if (mypopup.isOpen) {
+                    map.removeLayer(this);
+                    markers1.removeLayer(this);
+                    if (pickupbtnClicked == true) {
+                        leftMarker = [];
+                        $('#pstreet').val('');
+                        $('#pcity').val('');
+                        $('#ppostcode').val('');
 
-                        } else {
-                            rightMarker = [];
-                            $('#dstreet').val('');
-                            $('#dcity').val('');
-                            $('#dpostcode').val('');
+                    } else {
+                        rightMarker = [];
+                        $('#dstreet').val('');
+                        $('#dcity').val('');
+                        $('#dpostcode').val('');
 
-                        }
+                    }
+                }
+            });
+            marker.on('dragend', function (e) {
+
+                console.log("You dragged to: " + e.target._latlng);
+                marker.setLatLng(e.target._latlng).update(marker);
+                geocodeService1.reverse().latlng(e.target._latlng).run(function (error, result) {
+
+
+                    var streetname = result.address.Address;
+                    if (streetname == "") { }
+                    marker._popup.setContent(streetname);
+                    if (pickupbtnClicked == true) {
+                        document.getElementById('pstreet').value = result.address.Address;
+                        document.getElementById('ppostcode').value = result.address.Postal;
+                        document.getElementById('pcity').value = result.address.City;
+                        leftMarker = [];
+                        leftMarker.push(result.latlng);
+                        leftMarker.push(result.address.Address);
+                        leftMarker.push(result.address.Postal);
+                        leftMarker.push(result.address.City);
+                    } else if (deliverybtnClicked == true) {
+                        document.getElementById('dstreet').value = result.address.Address;
+                        document.getElementById('dpostcode').value = result.address.Postal;
+                        document.getElementById('dcity').value = result.address.City;
+                        rightMarker = [];
+                        rightMarker.push(result.latlng);
+                        rightMarker.push(result.address.Address);
+                        rightMarker.push(result.address.Postal);
+                        rightMarker.push(result.address.City);
                     }
                 });
-                marker.on('dragend', function (e) {
-
-                    console.log("You dragged to: " + e.target._latlng);
-                    marker.setLatLng(e.target._latlng).update(marker);
-                    geocodeService1.reverse().latlng(e.target._latlng).run(function (error, result) {
 
 
-                        var streetname = result.address.Address;
-                        if (streetname == "") { }
-                        marker._popup.setContent(streetname);
-                        if (pickupbtnClicked == true) {
-                            document.getElementById('pstreet').value = result.address.Address;
-                            document.getElementById('ppostcode').value = result.address.Postal;
-                            document.getElementById('pcity').value = result.address.City;
-                            leftMarker = [];
-                            leftMarker.push(result.latlng);
-                            leftMarker.push(result.address.Address);
-                            leftMarker.push(result.address.Postal);
-                            leftMarker.push(result.address.City);
-                        } else if (deliverybtnClicked == true) {
-                            document.getElementById('dstreet').value = result.address.Address;
-                            document.getElementById('dpostcode').value = result.address.Postal;
-                            document.getElementById('dcity').value = result.address.City;
-                            rightMarker = [];
-                            rightMarker.push(result.latlng);
-                            rightMarker.push(result.address.Address);
-                            rightMarker.push(result.address.Postal);
-                            rightMarker.push(result.address.City);
-                        }
-                    });
+            });
+        }
 
 
-                });
-            }
+    });
 
-
-        });
-    
 
 
 }
@@ -455,7 +458,7 @@ $("#route-button").click(function () {
                 return;
             }
             for (let i = 0; i < response.length; ++i) {
-                
+
                 if (response[i].lat == depotCoords[0] && response[i].lng == depotCoords[1]) {
                     continue;
                 }
@@ -467,53 +470,53 @@ $("#route-button").click(function () {
             console.warn('GetRoutes - error', response);
         }
     });
-    
+
 });
 $("#submit-button").click(function () {
 
-    
-        if ($('#dstreet').val() && $('#dpostcode').val() && $('#dcity').val()) {
 
-            geocodeService2.geocode().city($('#dcity').val()).address($('#dstreet').val()).postal($('#dpostcode').val()).run(function (err, results, response) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                var arrayOfPoints = [];
-                arrayOfPoints.push(results.results[0].latlng.lat);
-                arrayOfPoints.push(results.results[0].latlng.lng);
-                var lacik1;
-                var lacik2;
-                var lacik3;
-                var lacik4;
+    if ($('#dstreet').val() && $('#dpostcode').val() && $('#dcity').val()) {
 
-
-                if ($('#pstreet').val() && $('#ppostcode').val() && $('#pcity').val()) {
-                    geocodeService3.geocode().city($('#pcity').val()).address($('#pstreet').val()).postal($('#ppostcode').val()).run(function (err, results, response) {
-
-                        if (err) {
-                            console.log(err);
-                            return;
-                        }
+        geocodeService2.geocode().city($('#dcity').val()).address($('#dstreet').val()).postal($('#dpostcode').val()).run(function (err, results, response) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            var arrayOfPoints = [];
+            arrayOfPoints.push(results.results[0].latlng.lat);
+            arrayOfPoints.push(results.results[0].latlng.lng);
+            var lacik1;
+            var lacik2;
+            var lacik3;
+            var lacik4;
 
 
-                        arrayOfPoints.push(results.results[0].latlng.lat);
-                        arrayOfPoints.push(results.results[0].latlng.lng);
-                        lacik1 = arrayOfPoints[0];
-                        console.log(lacik1);
-                        lacik2 = arrayOfPoints[1];
-                        console.log(lacik2);
-                        lacik3 = arrayOfPoints[2];
-                        console.log(lacik3);
+            if ($('#pstreet').val() && $('#ppostcode').val() && $('#pcity').val()) {
+                geocodeService3.geocode().city($('#pcity').val()).address($('#pstreet').val()).postal($('#ppostcode').val()).run(function (err, results, response) {
 
-                        lacik4 = arrayOfPoints[3];
-                        console.log(lacik4);
-                        var sender = { f_name: $('#sfname').val(), l_name: $('#slname').val(), email: $('#semail').val(), phone:$('#sphone').val() };
-                        var receiver = { f_name: $('#rfname').val(), l_name: $('#rlname').val(), email: $('#remail').val(), phone: $('#rphone').val()};
-                        var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Lat: lacik3, Lng: lacik4, person: sender};
-                        var address2 = { City: $('#dcity').val(), StreetAddress: $('#dstreet').val(), Postcode: $('#dpostcode').val(), Lat: lacik1, Lng: lacik2, person: receiver};
-                        var order = { PickupAddress: address, DeliveryAddress: address2 };
-                        if (!markeronSubmitClicked) { 
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+
+                    arrayOfPoints.push(results.results[0].latlng.lat);
+                    arrayOfPoints.push(results.results[0].latlng.lng);
+                    lacik1 = arrayOfPoints[0];
+                    console.log(lacik1);
+                    lacik2 = arrayOfPoints[1];
+                    console.log(lacik2);
+                    lacik3 = arrayOfPoints[2];
+                    console.log(lacik3);
+
+                    lacik4 = arrayOfPoints[3];
+                    console.log(lacik4);
+                    var sender = { f_name: $('#sfname').val(), l_name: $('#slname').val(), email: $('#semail').val(), phone: $('#sphone').val() };
+                    var receiver = { f_name: $('#rfname').val(), l_name: $('#rlname').val(), email: $('#remail').val(), phone: $('#rphone').val() };
+                    var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Lat: lacik3, Lng: lacik4, person: sender };
+                    var address2 = { City: $('#dcity').val(), StreetAddress: $('#dstreet').val(), Postcode: $('#dpostcode').val(), Lat: lacik1, Lng: lacik2, person: receiver };
+                    var order = { PickupAddress: address, DeliveryAddress: address2 };
+                    if (!markeronSubmitClicked) {
                         $.ajax({
                             method: "POST",
                             url: "FormSubmit/Action1",
@@ -527,48 +530,48 @@ $("#submit-button").click(function () {
                                 console.warn('Send - error', response);
                             }
                         });
-                            $.ajax({
-                                method: "POST",
-                                url: "Vehicle/AddOrder",
-                                data: JSON.stringify(order),
-                                contentType: "application/json",
-                                dataType: "json",
-                                success: function (response) {
-                                    console.log('AddOrder - success', response);
-                                },
-                                error: function (response) {
-                                    console.warn('AddOrder - error', response);
-                                }
-                            });
-                        } else if(markerleftId!=null) {
-                            var sender = { f_name: $('#sfname').val(), l_name: $('#slname').val(), email: $('#semail').val(), phone: $('#sphone').val() };
-                            var receiver = { f_name: $('#rfname').val(), l_name: $('#rlname').val(), email: $('#remail').val(), phone: $('#rphone').val() };
-                            var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Lat: lacik3, Lng: lacik4, person: sender};
-                            var address2 = { City: $('#dcity').val(), StreetAddress: $('#dstreet').val(), Postcode: $('#dpostcode').val(), Lat: lacik1, Lng: lacik2, person: receiver};
-                            var order = { PickupAddress: address, DeliveryAddress: address2, Id:markerleftId};
-                            $.ajax({
-                                url: 'FormSubmit/Update/' + markerleftId,
-                                type: 'PUT',
-                                data: JSON.stringify(order),
-                                dataType: "json",
-                                contentType:"application/json;charset=utf-8",
-                                success: function (data) {
-                                    alert('Load was performed.');
-                                    console.log("order",data);
-                                }
-                            });
-                        }
-                    });
+                        $.ajax({
+                            method: "POST",
+                            url: "Vehicle/AddOrder",
+                            data: JSON.stringify(order),
+                            contentType: "application/json",
+                            dataType: "json",
+                            success: function (response) {
+                                console.log('AddOrder - success', response);
+                            },
+                            error: function (response) {
+                                console.warn('AddOrder - error', response);
+                            }
+                        });
+                    } else if (markerleftId != null) {
+                        var sender = { f_name: $('#sfname').val(), l_name: $('#slname').val(), email: $('#semail').val(), phone: $('#sphone').val() };
+                        var receiver = { f_name: $('#rfname').val(), l_name: $('#rlname').val(), email: $('#remail').val(), phone: $('#rphone').val() };
+                        var address = { City: $('#pcity').val(), StreetAddress: $('#pstreet').val(), Postcode: $('#ppostcode').val(), Lat: lacik3, Lng: lacik4, person: sender };
+                        var address2 = { City: $('#dcity').val(), StreetAddress: $('#dstreet').val(), Postcode: $('#dpostcode').val(), Lat: lacik1, Lng: lacik2, person: receiver };
+                        var order = { PickupAddress: address, DeliveryAddress: address2, Id: markerleftId };
+                        $.ajax({
+                            url: 'FormSubmit/Update/' + markerleftId,
+                            type: 'PUT',
+                            data: JSON.stringify(order),
+                            dataType: "json",
+                            contentType: "application/json;charset=utf-8",
+                            success: function (data) {
+                                alert('Load was performed.');
+                                console.log("order", data);
+                            }
+                        });
+                    }
+                });
 
-                }
-            });
+            }
+        });
 
-        }
-     
-    
-   
-   
-    
+    }
+
+
+
+
+
 });
 
 $("#obtain-button").click(function () {
@@ -592,7 +595,7 @@ $("#obtain-button").click(function () {
                 marker12.on('click', function (e) {
                     markeronSubmitClicked = true;
                     markerleftId = response[i].id;
-                   
+
                     document.getElementById('pstreet').value = response[i].pickupAddress.streetAddress;
                     document.getElementById('ppostcode').value = response[i].pickupAddress.postcode;
                     document.getElementById('pcity').value = response[i].pickupAddress.city;
@@ -609,9 +612,9 @@ $("#obtain-button").click(function () {
                     document.getElementById('rlname').value = response[i].deliveryAddress.person.l_name;
                     document.getElementById('remail').value = response[i].deliveryAddress.person.email;
                     document.getElementById('rphone').value = response[i].deliveryAddress.person.phone;
-                   
+
                 });
-                
+
                 marker21 = L.marker([response[i].pickupAddress.lat, response[i].pickupAddress.lng], { icon: greenIcon }).addTo(pickUpmarkers).bindPopup("Pickup " + response[i].id + ": " + response[i].pickupAddress.streetAddress);
                 marker21.on('click', function (e) {
                     markeronSubmitClicked = true;
@@ -685,7 +688,7 @@ $("#orders-button").click(function () {
             var points = [];
             for (let i = 0; i < response.length; ++i) {
                 var pointsA = [];
-                for (let j = 0; j < response[i].length; ++j){
+                for (let j = 0; j < response[i].length; ++j) {
                     var point = new L.LatLng(response[i][j].x, response[i][j].y);
                     pointsA.push(point);
                 }

@@ -17,10 +17,7 @@ var redIcon = new L.Icon({
 });
 
 
-// some variables and constants
-var uri = 'api/address';
-let PICKUP = 0;
-let DELIVERY = 1;
+
 
 // map attribute
 var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +

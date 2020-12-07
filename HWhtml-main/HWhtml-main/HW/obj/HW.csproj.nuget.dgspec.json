@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mjlem\\OneDrive\\Pulpit\\HWMichal\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj": {}
+    "C:\\Users\\mjlem\\OneDrive\\Pulpit\\moj\\FullstackHW\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mjlem\\OneDrive\\Pulpit\\HWMichal\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj": {
+    "C:\\Users\\mjlem\\OneDrive\\Pulpit\\moj\\FullstackHW\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\HWMichal\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj",
+        "projectUniqueName": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\moj\\FullstackHW\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj",
         "projectName": "HW",
-        "projectPath": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\HWMichal\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj",
+        "projectPath": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\moj\\FullstackHW\\HWhtml-main\\HWhtml-main\\HW\\HW.csproj",
         "packagesPath": "C:\\Users\\mjlem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\HWMichal\\HWhtml-main\\HWhtml-main\\HW\\obj\\",
+        "outputPath": "C:\\Users\\mjlem\\OneDrive\\Pulpit\\moj\\FullstackHW\\HWhtml-main\\HWhtml-main\\HW\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mjlem\\AppData\\Roaming\\NuGet\\NuGet.Config",

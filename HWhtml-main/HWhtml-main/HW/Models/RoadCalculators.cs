@@ -8,73 +8,76 @@ namespace HW.Models
     
     public class RoadCalculator
     {
-        public Order ClosestForPickUp(Vehicle point, List<Order> packages)
+        public Vehicle ClosestForPickUp(Order package, List<Vehicle> vehicles)
         {
-            Order closestPoint = null;
+            Vehicle closestPoint = null;
             float closestDistance = float.MaxValue;
-
-            foreach (var p in packages)
+            int weight = 0;
+            foreach (var v in vehicles)
             {
-                float distanceToPoint = (float)Math.Sqrt(Math.Pow(p.PickupAddress.Lat - point.Lat, 2) + Math.Pow(p.PickupAddress.Lng - point.Lng, 2));
-                if (distanceToPoint < closestDistance)
+                float distanceToPoint = (float)Math.Sqrt(Math.Pow(v.Lat - package.PickupAddress.Lat, 2) + Math.Pow(v.Lng - package.PickupAddress.Lng, 2));
+                if (distanceToPoint < closestDistance && v.CurrentCapacity+package.PackageWeight<=v.MaxCapacity)
                 {
-                    closestPoint = p;
+                    weight = package.PackageWeight;
+                    closestPoint = v;
                     closestDistance = distanceToPoint;
                 }
             }
-
+            closestPoint.CurrentCapacity += weight;
             return closestPoint;
         }
-        public Order ClosestForDelivery(Vehicle point, List<Order> packages)
+        public void SortForPickup(List<Order> orders, List<Vehicle> vehicles)
         {
-            Order closestPoint = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (var p in packages)
+            foreach(var p in orders)
             {
-                float distanceToPoint = (float)Math.Sqrt(Math.Pow(p.DeliveryAddress.Lat - point.Lat,2)+ Math.Pow(p.DeliveryAddress.Lng - point.Lng, 2));
-                if (distanceToPoint < closestDistance)
+                Vehicle temp = ClosestForPickUp(p, vehicles);
+                if(temp!=null)
                 {
-                    closestPoint = p;
+                    temp.PickupRoads.Add(p);
+                }
+            }
+        }
+        public Vehicle ClosestForDelivery(Order package, List<Vehicle> vehicles)
+        {
+            List<Vehicle> temp = new List<Vehicle>();
+            foreach(var vi in vehicles)
+            {
+                
+
+                if (vi.Lat == 52.232014f && vi.Lng == 21.006039f)
+                {
+                    Console.WriteLine(vi.Lat);
+                    Console.WriteLine(vi.Lng);
+                    temp.Add(vi);
+                }
+            }
+            Vehicle closestPoint = null;
+            float closestDistance = float.MaxValue;
+            int weight = 0;
+            foreach (var v in temp)
+            {
+                float distanceToPoint = (float)Math.Sqrt(Math.Pow(v.Lat - package.DeliveryAddress.Lat, 2) + Math.Pow(v.Lng - package.DeliveryAddress.Lng, 2));
+                Console.WriteLine(distanceToPoint);
+                if (distanceToPoint < closestDistance && v.CurrentCapacity + package.PackageWeight <= v.MaxCapacity)
+                {
+                    weight = package.PackageWeight;
+                    closestPoint = v;
                     closestDistance = distanceToPoint;
                 }
             }
-
+            closestPoint.CurrentCapacity += weight;
             return closestPoint;
         }
-        public Order ClosestFoPickUp(Order point, List<Order> packages)
+        public void SortForDelivery(List<Order> orders, List<Vehicle> vehicles)
         {
-            Order closestPoint = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (var p in packages)
+            foreach (var p in orders)
             {
-                float distanceToPoint = (float)Math.Sqrt(Math.Pow(p.PickupAddress.Lat - point.PickupAddress.Lat, 2) + Math.Pow(p.PickupAddress.Lng - point.PickupAddress.Lng, 2));
-                if (distanceToPoint < closestDistance)
+                Vehicle temp = ClosestForDelivery(p, vehicles);
+                if (temp != null)
                 {
-                    closestPoint = p;
-                    closestDistance = distanceToPoint;
+                    temp.DeliveryRoads.Add(p);
                 }
             }
-
-            return closestPoint;
-        }
-        public Order ClosestForDelivery(Order point, List<Order> packages)
-        {
-            Order closestPoint = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (var p in packages)
-            {
-                float distanceToPoint = (float)Math.Sqrt(Math.Pow(p.DeliveryAddress.Lat - point.DeliveryAddress.Lat, 2) + Math.Pow(p.DeliveryAddress.Lng - point.DeliveryAddress.Lng, 2));
-                if (distanceToPoint < closestDistance)
-                {
-                    closestPoint = p;
-                    closestDistance = distanceToPoint;
-                }
-            }
-
-            return closestPoint;
         }
 
     }

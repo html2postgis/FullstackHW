@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -71,12 +72,15 @@ namespace HW.Models
         //depot address must be given as first address
         public List<Order> DeliveryRoads { get; set; }
         public List<Order> PickupRoads { get; set; }
+        public List<PointF> travelRouteP { get; set; }
+        public List<PointF> travelRouteD { get; set; }
         public float Lat { get; set; }
         public float Lng { get; set; }
 
 
         public int MaxCapacity { get; set; }
         public int CurrentCapacity { get; set; }
+       
        
     }
 }

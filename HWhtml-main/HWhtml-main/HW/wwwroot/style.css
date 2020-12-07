@@ -102,7 +102,7 @@ textarea:focus {
     height: 75px;
 }
 
-#submit-button {
+#submit-button, #obtain-button, #route-button, #orders-button {
     border: none;
     background: #618685;
     color: #ffffff !important;
@@ -113,13 +113,14 @@ textarea:focus {
     border-radius: 6px;
     display: inline-block;
     transition: all 0.3s ease 0s;
+    margin-left:5px;
 }
 
 #submit-body {
     height: 90px;
 }
 
-#submit-button:hover {
+#submit-button:hover, #obtain-button:hover, #route-button:hover, #orders-button:hover {
     /* background-color:  */
     color: white;
     font-weight: 700;

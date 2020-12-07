@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Package delivery form</title>
     <link rel="stylesheet" href="style.css" />
-
     <!-- Load Leaflet from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
@@ -21,7 +20,7 @@
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js" integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA==" crossorigin="">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
 </head>
 
 <body>
@@ -55,7 +54,7 @@
 
                     <div class="box">
                         <label class="parcel-box">
-                            <input class="parcel-radio" type="radio" name="radio" checked />
+                            <input id="small_box" class="parcel-radio" type="radio" name="radio" checked />
                             <img src="PackageSizes/small.png" alt="Small box" />
                             <span>Small</span>
                             <span>Up to 5kg</span>
@@ -65,7 +64,7 @@
 
                     <div class="box">
                         <label class="parcel-box">
-                            <input class="parcel-radio" type="radio" name="radio" />
+                            <input id="medium_box" class="parcel-radio" type="radio" name="radio" />
                             <img src="PackageSizes/medium.png" alt="Medium box">
                             <span>Medium</span>
                             <span>Up to 15kg</span>
@@ -74,7 +73,7 @@
 
                     <div class="box">
                         <label class="parcel-box">
-                            <input class="parcel-radio" type="radio" name="radio" />
+                            <input id="big_box" class="parcel-radio" type="radio" name="radio" />
                             <img src="PackageSizes/large.png" alt="Large box">
                             <span>Big</span>
                             <span>Up to 25kg</span>
@@ -94,7 +93,7 @@
                                 <label class="form-label" for="fname">First name<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="sfname" type="text" pattern="[A-Za-z]{?20}" required name="sfirstname" placeholder="Your first name...">
+                                <input class="user-input" id="sfname" type="text" pattern="[A-Za-z]" required name="sfirstname" placeholder="Your first name...">
                             </div>
                         </div>
                         <div class="row">
@@ -102,7 +101,7 @@
                                 <label class="form-label" for="fname">Last Name<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="slname" type="text" pattern="[A-Za-z]{?20}" required name="slastname" placeholder="Your last name...">
+                                <input class="user-input" id="slname" type="text" pattern="[A-Za-z]" required name="slastname" placeholder="Your last name...">
                             </div>
                         </div>
                         <div class="row">
@@ -133,7 +132,7 @@
                                 <label class="form-label" for="fname">First name<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="rfname" type="text" pattern="[A-Za-z]{?20}" required name="firstname" placeholder="Recipient's name..">
+                                <input class="user-input" id="rfname" type="text" pattern="[A-Za-z]" required name="firstname" placeholder="Recipient's name..">
                             </div>
                         </div>
                         <div class="row">
@@ -141,7 +140,7 @@
                                 <label class="form-label" for="fname">Last Name<span>*</span></label>
                             </div>
                             <div class="col2">
-                                <input class="user-input" id="rlname" type="text" pattern="[A-Za-z]{?20}" required name="rlastname" placeholder="Your name..">
+                                <input class="user-input" id="rlname" type="text" pattern="[A-Za-z]" required name="rlastname" placeholder="Your name..">
                             </div>
                         </div>
                         <div class="row">
@@ -267,42 +266,48 @@
             </div>
             <div class="row map-comment-row">
 
+                <div style="width:100%; display:flex; flex-direction:row;align-items:center;justify-content:center;">
+                    <div id="mapid" style="height:400px;width:1200px;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="column50 comments-area">
                     <div class="big-label">
                         <h2 class="comment-label">Comments</h2>
                     </div>
                     <div class="col2">
                         <textarea id="comments" name="comments" placeholder="Additional comments about the delivery method" style="height:250px; width: 100%;"></textarea>
-
                     </div>
                 </div>
-                <div class="col2">
-                    <div id="mapid">
-
-                    </div>
-                </div>
-                
             </div>
             <div style="height: 30px;"></div>
             <div id="submit-body">
                 <input type="button" id="submit-button" value="Submit" />
-                <input type="button" id="obtain-button" value="obtain" />
+                <span>  </span>
+                <input type="button" id="obtain-button" value="Obtain" />
+                <span>  </span>
+                <input type="button" id="route-button" value="Map Orders" />
+                <span>  </span>
+                <input type="button" id="orders-button" value="Show Routes" />
 
             </div>
             <div id="special-class">
                 <div class="column50 comments-area">
                     <div style="height: 30px;"></div>
-                    
+
                 </div>
-              
+
             </div>
         </form>
 
     </div>
-    
+
     <footer>
         <p>Michał Lemiec<br> Karol Malinowski<br>
     </footer>
+    <script src="posty.js"></script>
     <script src="script.js"></script>
 </body>
 

@@ -11,8 +11,8 @@ namespace HW.Models
     {
         bool AddOrder(Order order);
         List<Order> GetOrders();
-        Order Find(string key);
-        Order Remove(string key);
+        Order Find(long key);
+        Order Remove(long key);
         void Update(Order item);
     }
     public class OrderList : IOrderList
@@ -30,9 +30,11 @@ namespace HW.Models
             }
         }
 
-        public Order Find(string key)
+        public Order Find(long key)
         {
-            throw new NotImplementedException();
+            Order item;
+            orders.TryGetValue(key, out item);
+            return item;
         }
 
         public List<Order> GetOrders()
@@ -40,14 +42,24 @@ namespace HW.Models
             return orders.Values.ToList();
         }
 
-        public Order Remove(string key)
+        public Order Remove(long key)
         {
-            throw new NotImplementedException();
+            Order item;
+            orders.TryGetValue(key, out item);
+            if(orders.Remove(key))
+            {
+                return item;
+            }
+            return null;
+           
         }
 
         public void Update(Order item)
         {
-            throw new NotImplementedException();
+            orders[item.Id] = item;
         }
+        
+
+       
     }
 }

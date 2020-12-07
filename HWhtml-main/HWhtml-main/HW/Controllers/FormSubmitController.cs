@@ -40,6 +40,31 @@ namespace HW.Controllers
         {
             return _orderList.GetOrders();
         }
+        // update 
+        [HttpPut("Update/{id}")]
+        public IActionResult Update(int id,[FromBody] Order item)
+        {
+            if (item == null || (int)item.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var todo = _orderList.Find(id);
+            if (todo == null)
+            {
+                return NotFound();
+            }
+
+            _orderList.Update(item);
+
+            return Ok(item);
+        }
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _orderList.Remove(id);
+
+        }
 
     }
 }
